@@ -80,7 +80,18 @@ def list_collection():
 
 @app.route("/card/delete/<id>", methods=['DELETE'], strict_slashes=False)
 def delete_card_from_collection(id):
-    pass
+    """
+
+    Deletes a card from the collection
+
+    Args:
+        id (str): the id of the card to delete
+    """
+    try:
+        collection_repo.delete_card(id)
+        return jsonify({"message": "Card with ID '{}' deleted successfully".format(id)}), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
 
 
 if __name__ == '__main__':

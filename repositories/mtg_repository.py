@@ -18,3 +18,11 @@ class MTGRepository:
             card = Card(**response.json()["cards"][0])
             return card
         return None
+
+    def delete_card(self, id):
+        query = "DELETE FROM cards WHERE id =?"
+        self.cursor.execute(query, (id,))
+        affected_rows = self.cursor.rowcount
+        if affected_rows == 0:
+            raise ValueError("No card found with ID '{}'".format(id))
+        self.conn.commit()
